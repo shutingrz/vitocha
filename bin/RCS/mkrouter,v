@@ -1,0 +1,38 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.02.16.05.53.58;	author tss;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#!/bin/sh
+dist="/jails"
+ezjail-admin create -f router -r $1 $1 0.0.0.0
+/usr/sbin/jail -c vnet host.hostname=$1 name=$1 path=${dist}/$1 persist
+mount -t devfs devfs ${dist}/$1/dev
+mount_nullfs ${dist}/basejail ${dist}/$1/basejail
+for pkg in `ls ${dist}/flavours/router/pkg`
+do 
+  jexec $1 pkg_add /pkg/$pkg
+done
+echo $1 ' created.'
+#
+jail -r $1
+umount ${dist}/$1/dev
+umount ${dist}/$1/basejail
+echo $1 ' unjailed.'@

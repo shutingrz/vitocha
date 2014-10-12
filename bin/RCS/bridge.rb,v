@@ -1,0 +1,496 @@
+head	1.16;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.16
+date	2013.02.16.06.30.17;	author tss;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2013.01.20.07.38.16;	author tss;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2013.01.20.07.37.40;	author tss;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2012.10.28.16.48.30;	author root;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2012.10.28.09.06.45;	author root;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2012.10.28.09.02.35;	author root;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2012.10.28.08.35.49;	author root;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2012.10.28.08.34.23;	author root;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2012.10.28.08.10.58;	author root;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2012.10.28.02.46.04;	author root;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2012.10.28.02.44.55;	author root;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2012.10.28.02.29.04;	author root;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2012.10.28.02.19.49;	author root;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2012.10.28.02.04.13;	author root;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2012.10.21.08.19.38;	author root;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2012.10.13.08.19.26;	author root;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@add license
+@
+text
+@# VITOCHA Bridge Class
+# 
+#Copyright (c) 2012-2013, Tsunehiko Suzuki
+#All rights reserved.
+#                                                                              
+# Redistribution and use in source and binary forms, with or without           
+# modification, are permitted provided that the following conditions           
+# are met:                                                                     
+# 1. Redistributions of source code must retain the above copyright            
+#    notice, this list of conditions and the following disclaimer.             
+# 2. Redistributions in binary form must reproduce the above copyright         
+#    notice, this list of conditions and the following disclaimer in the       
+#    documentation and/or other materials provided with the distribution.      
+#                                                                              
+# THIS SOFTWARE IS PROVIDED BY AUTHOR AND CONTRIBUTORS ``AS IS'' AND           
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE        
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   
+# ARE DISCLAIMED.  IN NO EVENT SHALL AUTHOR OR CONTRIBUTORS BE LIABLE          
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL   
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS      
+# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)        
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT   
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY    
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF       
+# SUCH DAMAGE.                                                                 
+
+# 	$Id: bridge.rb,v 1.15 2013/01/20 07:38:16 tss Exp tss $
+
+# usage
+# bridge=Bridge.new(jailname) : create bridge which has a vbridge0
+# bridge.on  : ifconfig vbridge0 up
+# bridge.off : ifconfig vbridge0 down
+# bridge.destroy : jail -r jailname in safe manner
+# bridge.connect(epair) : connect epair to vbridge0
+# bridge.up(epair) : ifconfig <epair> up
+# bridge.down(epair) : ifconfig <epair> down
+# bridge.assingip(ip,mask) : ifconfig vbridge0 inet <ip> netmask <mask>}
+
+class Bridge < Equipment
+
+  def initialize(jailname)
+    super
+    sh=Shell.new
+    sh.transact{
+#      if jls("host.hostname").to_a.index("#{jailname}\n")==nil
+        bridgename=ifconfig("bridge create").to_s
+        ifconfig("#{bridgename} vnet #{jailname}")
+        # Naming "vbridge0" for the bridge interface
+        jexec(jailname,"ifconfig #{bridgename} name vbridge0")
+        jexec(jailname,"ifconfig vbridge0 up")
+#      end
+    }
+  end
+
+  def on
+    sh=Shell.new
+    name=@@name
+    sh.transact{
+      jexec(name,"ifconfig vbridge0 up")
+    }
+  end
+
+  def off
+    sh=Shell.new
+    name=@@name
+    sh.transact{
+      jexec(name,"ifconfig vbridge0 down")
+    }
+  end
+
+  def destroy
+     puts "destroy #{@@name}"
+     jname=@@name 
+     sh=Shell.new
+     sh.transact{
+       ifnames=jexec(jname,"ifconfig -l").to_s.split(" ").select{|item| item =~ /epair.*/}
+       ifnames.each{|epair| ifconfig("#{epair} -vnet #{jname}")}
+       umt_nullfs(jname)
+       jail("-r",jname)
+       umt_devfs(jname)
+     }
+  end
+
+  def connect(epair)
+    name=@@name 
+    sh=Shell.new
+    sh.transact{
+      ifconfig("#{epair} vnet #{name}")
+      jexec(name,"ifconfig vbridge0 addm #{epair}")
+    }
+    @@epairs<< epair
+  end
+
+  def assignip(ip,mask)
+    name=@@name 
+    sh=Shell.new
+    sh.transact{
+      jexec(name,"ifconfig vbridge0 inet #{ip} netmask #{mask}")
+    }
+  end
+
+  def up(epair)
+    name=@@name 
+    sh=Shell.new
+    sh.transact{
+      jexec(name,"ifconfig #{epair} up")
+    }
+  end
+
+  def down(epair)
+    name=@@name 
+    sh=Shell.new
+    sh.transact{
+      jexec(name,"ifconfig #{epair} down")
+    }
+  end
+
+  attr_accessor :epairs
+end
+@
+
+
+1.15
+log
+@rm shbang
+@
+text
+@d1 25
+a25 4
+# Internet Builder Bridge Class
+# 	$Id: bridge.rb,v 1.14 2013/01/20 07:37:40 tss Exp tss $
+# T.Suzuki
+#
+d27 3
+a29 1
+# man
+@
+
+
+1.14
+log
+@?
+@
+text
+@a0 1
+#!/usr/local/bin/ruby
+d2 1
+a2 1
+# 	$Id: bridge.rb,v 1.13 2012/10/28 16:48:30 root Exp root $
+@
+
+
+1.13
+log
+@debug
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.12 2012/10/28 09:06:45 root Exp root $
+d28 1
+@
+
+
+1.12
+log
+@add attr_accessor :epairs
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.11 2012/10/28 09:02:35 root Exp root $
+d17 1
+a17 1
+class Bridge
+d20 1
+a20 2
+    @@name=jailname
+    @@epairs=[]
+d23 1
+a23 7
+      if jls("-j",jailname).to_a.size == 1
+        jailc(jailname)
+        mt_devfs(jailname)
+        mt_nullfs(jailname)
+#       jexec(jailname,"sysctl -w net.inet.ip.forwarding=1")
+        jexec(jailname,"ifconfig lo0 127.0.0.1/24 up")
+        jexec(jailname,"ipfw add allow ip from any to any")
+d28 1
+a28 1
+      end
+@
+
+
+1.11
+log
+@add @@epairs
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.10 2012/10/28 08:35:49 root Exp root $
+d101 2
+@
+
+
+1.10
+log
+@hoge
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.9 2012/10/28 08:34:23 root Exp root $
+d21 1
+d69 3
+a71 3
+     name=@@name 
+     sh=Shell.new
+     sh.transact{
+d75 1
+d79 3
+a81 3
+     name=@@name 
+     sh=Shell.new
+     sh.transact{
+d87 3
+a89 3
+     name=@@name 
+     sh=Shell.new
+     sh.transact{
+d95 3
+a97 3
+     name=@@name 
+     sh=Shell.new
+     sh.transact{
+@
+
+
+1.9
+log
+@modify bridgename
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.8 2012/10/28 08:10:58 root Exp root $
+d40 1
+d42 1
+a42 1
+      jexec(@@name,"ifconfig vbridge0 up")
+d48 1
+d50 1
+a50 1
+      jexec(@@name,"ifconfig vbridge0 down")
+@
+
+
+1.8
+log
+@modify bridde create
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.7 2012/10/28 02:46:04 root Exp root $
+d30 2
+a31 2
+        n=ifconfig("bridge create").scan(/epair[\d]+a/) 
+        ifconfig("bridge#{n} vnet #{jailname}")
+@
+
+
+1.7
+log
+@hoge
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.6 2012/10/28 02:44:55 root Exp root $
+d30 1
+a30 2
+        ifconfig("bridge create") 
+        n=epairnum
+@
+
+
+1.6
+log
+@debug initialize end
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.5 2012/10/28 02:29:04 root Exp root $
+d36 1
+a36 1
+    end
+@
+
+
+1.5
+log
+@remove epairnum
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.4 2012/10/28 02:19:49 root Exp root $
+d36 1
+@
+
+
+1.4
+log
+@add man
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.3 2012/10/28 02:04:13 root Exp root $
+a18 4
+  def epairnum
+    ifconfig_org.grep(/epair.a/).size-1
+  end
+
+@
+
+
+1.3
+log
+@addm
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.2 2012/10/21 08:19:38 root Exp root $
+d7 10
+d69 1
+a69 1
+  def connect(interface)
+d73 2
+a74 2
+      ifconfig("#{interface} vnet #{name}")
+      jexec(name,"ifconfig vbridge0 addm #{interface}")
+d86 1
+a86 1
+  def up(interface)
+d90 1
+a90 1
+      jexec(name,"ifconfig #{interface} up")
+d94 1
+a94 1
+  def down(interface)
+d98 1
+a98 1
+      jexec(name,"ifconfig #{interface} down")
+@
+
+
+1.2
+log
+@rename bridgen to vbridge0
+@
+text
+@d3 1
+a3 1
+# 	$Id: bridge.rb,v 1.1 2012/10/13 08:19:26 root Exp root $
+d26 2
+a27 2
+        bridgename="bridge#{n}"
+        ifconfig("#{bridgename} vnet #{jailname}")
+a29 1
+    }
+d64 1
+d72 1
+a72 1
+      jexec(name,"ifconfig #{name} inet #{ip} netmask #{mask}")
+d83 8
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 1
+a3 1
+# 	$Id: router.rb,v 1.1 2012/10/13 07:40:22 root Exp root $
+d28 1
+d36 1
+a36 1
+      jexec(@@name,"ifconfig #{@@name} up")
+d43 1
+a43 1
+      jexec(@@name,"ifconfig #{@@name} down")
+@

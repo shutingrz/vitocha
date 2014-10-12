@@ -1,0 +1,30 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.01.20.06.37.15;	author tss;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@##!/usr/local/bin/ruby
+require 'webrick'
+srv = WEBrick::HTTPServer.new({ :DocumentRoot => '/jails/data/',
+	:BindAddess => '*',
+	:Port => 3333})
+trap("INT"){srv.shutdown}
+srv.start
+@

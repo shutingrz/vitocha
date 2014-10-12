@@ -1,0 +1,1690 @@
+head	1.40;
+access;
+symbols;
+locks
+	guest:1.40
+	root:1.3; strict;
+comment	@# @;
+
+
+1.40
+date	2013.11.23.17.29.22;	author guest;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2013.11.17.16.41.30;	author guest;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2013.05.28.02.08.14;	author tss;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2013.02.16.06.39.19;	author tss;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2013.02.16.05.53.22;	author tss;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2013.01.20.13.59.22;	author tss;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2013.01.20.13.58.09;	author tss;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2013.01.20.13.05.14;	author tss;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2013.01.20.13.00.48;	author tss;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2013.01.20.12.50.50;	author tss;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2013.01.20.06.28.15;	author tss;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2013.01.20.06.11.56;	author tss;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2013.01.13.10.12.38;	author root;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2013.01.13.08.49.35;	author root;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2012.12.08.23.39.47;	author root;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2012.12.07.15.20.18;	author root;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2012.11.14.10.40.40;	author root;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2012.11.10.08.42.05;	author root;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2012.11.10.07.37.10;	author root;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2012.11.09.15.56.54;	author root;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2012.11.07.14.50.41;	author root;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2012.11.07.14.33.10;	author root;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2012.11.06.13.59.42;	author root;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2012.11.02.13.01.50;	author root;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2012.11.02.08.21.48;	author root;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2012.11.02.07.06.36;	author root;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2012.11.01.15.39.06;	author root;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2012.11.01.15.32.08;	author root;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2012.11.01.14.04.32;	author root;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2012.10.28.14.46.18;	author root;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2012.10.28.08.59.11;	author root;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2012.10.28.03.02.21;	author root;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2012.10.13.07.42.48;	author root;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2012.10.13.05.58.36;	author root;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2012.10.13.05.46.33;	author root;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2012.10.13.05.25.21;	author root;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2012.10.13.04.52.42;	author root;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2012.10.13.04.49.29;	author root;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2012.10.13.02.38.40;	author root;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2012.10.13.02.29.52;	author root;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.40
+log
+@add genhtml
+@
+text
+@#!/usr/local/bin/ruby
+# Mimic Internet Builder (sample script using vitocha.rb)
+# T.Suzuki
+
+# 	$Id: jail.rb,v 1.39 2013/11/17 16:41:30 guest Exp guest $	
+
+# before run this script
+#  make router0-9 , bridge0-3 , server1-3
+#   by using mkrouter and mkserver
+#   ex. mkrouter router0 ; mkrouter bridge0
+
+require File.expand_path(File.dirname(__FILE__) + '/vitocha.rb')
+
+# jails path
+$jails="/jails"
+
+################################################################
+# Main
+################################################################
+
+################################################################
+# Setup Backborn
+#  realsever-epair0b-(epair0a-router0-epair1a-epair1b-bridge0)
+################################################################
+
+# tomocha as a manager of epairs
+tomocha=Operator.new
+
+# create router and connect to realserver
+# * bin/mkrouter router0 before run this script
+router0=Router.new("router0")
+tomocha.createpair
+ifconfig("epair0a inet 192.168.11.1 netmask 255.255.255.0")
+ifconfig("epair0a up")
+router0.connect("epair0b") # connect to realhost
+router0.assignip("epair0b","192.168.11.254","255.255.255.0") 
+tomocha.register("epair0b","router0","192.168.11.254","255.255.255.0") # you need this if you did not use $tomocha.assignip .
+router0.up("epair0b")
+router0.start("quagga")
+#
+# connect gateway to inner segment bridge (IX) 
+# * bin/mkrouter bridge0 before run this script
+bridge0=Bridge.new("bridge0")
+bridge0.on
+tomocha.createpair
+router0.connect("epair1a")
+router0.assignip("epair1a","172.18.128.254","255.255.255.0")
+tomocha.register("epair1a","router0","172.18.128.254","255.255.255.0")
+bridge0.connect("epair1b")
+tomocha.register("epair1b","bridge0")
+bridge0.up("epair1b")
+#
+# create root server and connect to gateway
+# * bin/mkrouter server0 before run this script
+server0=Server.new("server0")
+tomocha.createpair
+server0.connect("epair2a")
+server0.assignip("epair2a","172.18.255.1","255.255.255.0")
+tomocha.register("epair2a","server0","172.18.255.1","255.255.255.0","65000")
+server0.up("epair2a")
+router0.connect("epair2b")
+router0.assignip("epair2b","172.18.255.2","255.255.255.0")
+tomocha.register("epair2b","router0","172.18.255.2","255.255.255.0","65000")
+router0.up("epair2b")
+server0.assigngw("172.18.255.2")
+server0.start("nsd")
+
+##########################################################################
+# Your own network
+##########################################################################
+
+### Setup ISP ### 
+0.upto(2) do |gnum|
+  #
+  ## Setup ISP BGP Router
+  #
+  rname0 = "router" + (1+gnum*3).to_s
+  ip = gnum + 1
+  tomocha.setuprouter(rname0)
+  # connect to bridge0
+  epaira,epairb,n=tomocha.createpair
+  tomocha.connect(rname0,epaira)
+  tomocha.assignip(rname0,epaira,"172.18.128.#{ip}",'255.255.255.0')
+  tomocha.up(rname0,epaira)
+  bridge0.connect(epairb) 
+  bridge0.up(epairb)
+  tomocha.register(epairb,"bridge0")
+  tomocha.start(rname0,"quagga")
+  #
+  ## setup customer bgp router
+  #
+  rname1="router" + (2+gnum*3).to_s
+  seg=gnum*4
+  tomocha.setuprouter(rname1)
+  # connect to isp
+  epaira,epairb,n=tomocha.createpair
+  tomocha.connect(rname1,epaira)
+  ip="172.18.#{seg}.2"
+  as=(gnum+65001).to_s
+  tomocha.assignip(rname1,epaira,ip,'255.255.255.0',as)
+  tomocha.up(rname1,epaira)
+  tomocha.connect(rname0,epairb)
+  ip="172.18.#{seg}.1"
+  tomocha.assignip(rname0,epairb,ip,'255.255.255.0',as)
+  tomocha.up(rname0,epairb)
+  tomocha.start(rname1,"quagga")
+  #
+  ## setup customer ospf router
+  #    assign /24
+  #    subnet /25
+  #
+  rname2="router" + (3+gnum*3).to_s
+  tomocha.setuprouter(rname2)
+  # connect to isp
+  epaira,epairb,n=tomocha.createpair
+  tomocha.connect(rname2,"epair#{n}a")
+  seg=gnum*4+1
+  ip="172.18.#{seg}.130"
+  as=(gnum+65004).to_s
+  tomocha.assignip(rname2,epaira,ip,'255.255.255.128',as)
+  tomocha.up(rname2,epaira)
+  tomocha.connect(rname1,epairb)
+  ip="172.18.#{seg}.129"
+  tomocha.assignip(rname1,epairb,ip,'255.255.255.128',as)
+  tomocha.up(rname1,epairb)
+  tomocha.start(rname2,"quagga")
+  #
+  ## setup customer server segment
+  #
+  bridge="bridge" + (gnum+1).to_s
+  tomocha.setupbridge(bridge)
+  epaira,epairb,n=tomocha.createpair
+  tomocha.connect(rname2,epaira)
+  seg=gnum*4+1 
+  ip="172.18.#{seg}.126"
+  tomocha.assignip(rname2,epaira,ip,'255.255.255.128',as)
+  tomocha.up(rname2,epaira)
+  tomocha.connect(bridge,"epair#{n}b")
+  tomocha.up(bridge,"epair#{n}b")
+  #
+  ## setup servers
+  # first
+  servername="server" + (gnum*2+1).to_s
+  ip="172.18.#{seg}.1"
+  gw="172.18.#{seg}.126"
+  tomocha.setupserver(servername)
+  # connect to bridge
+  epaira,epairb,n=tomocha.createpair
+  tomocha.connect(servername,epaira)
+  tomocha.assignip(servername,epaira,ip,'255.255.255.128',as)
+  tomocha.assigngw(servername,gw)
+  tomocha.up(servername,epaira)
+  tomocha.connect(bridge,epairb)
+  tomocha.up(bridge,epairb)
+  # second
+  servername="server" + (gnum*2+2).to_s
+  ip="172.18.#{seg}.2"
+  gw="172.18.#{seg}.126"
+  tomocha.setupserver(servername)
+  # connect to bridge
+  epaira,epairb,n=tomocha.createpair
+  tomocha.connect(servername,epaira)
+  tomocha.assignip(servername,epaira,ip,'255.255.255.128',as)
+  tomocha.assigngw(servername,gw)
+  tomocha.up(servername,epaira)
+  tomocha.connect(bridge,epairb)
+  tomocha.up(bridge,epairb)
+end
+
+# start daemons
+tomocha.start("server1","nsd")
+#tomocha.start("server2","nsd")
+tomocha.start("server3","nsd")
+#tomocha.start("server4","nsd")
+tomocha.start("server5","unbound")
+#tomocha.start("server6","unbound")
+
+# set default route
+system("route add -net 172.18.0.0/16 192.168.11.254")
+
+# for DUMMYNET
+system("sysctl -a net.link.bridge.ipfw")
+
+# make nwdiag
+puts "Now I'm drawing network diagram!"
+f=open("#{$jails}/data/net.diag","w")
+  f.puts tomocha.gendiag
+f.close
+
+# make html
+f=open("#{$jails}/data/index.html","w")
+  f.puts tomocha.genhtml
+f.close
+
+system("nwdiag -o #{$jails}/data/net.png #{$jails}/data/net.diag")
+
+puts "Finish!"
+
+@
+
+
+1.39
+log
+@Renumbering
+@
+text
+@d5 1
+a5 1
+# 	$Id: jail.rb,v 1.38 2013/05/28 02:08:14 tss Exp guest $	
+d170 1
+d172 1
+a172 1
+tomocha.start("server2","nsd")
+d174 3
+a176 3
+tomocha.start("server4","nsd")
+tomocha.start("server5","nsd")
+tomocha.start("server6","unbound")
+d178 1
+d180 1
+d189 6
+d198 1
+@
+
+
+1.38
+log
+@add adhoc otion
+@
+text
+@d5 1
+a5 1
+# 	$Id: jail.rb,v 1.37 2013/02/16 06:39:19 tss Exp $	
+d37 1
+a37 1
+tomocha.register("router0","epair0b","192.168.11.254","255.255.255.0") # you need this if you did not use $tomocha.assignip .
+d47 2
+a48 2
+router0.assignip("epair1a","192.168.0.254","255.255.255.0")
+tomocha.register("epair1a","router0","192.168.0.254","255.255.255.0")
+d58 2
+a59 2
+server0.assignip("epair2a","192.168.255.1","255.255.255.0")
+tomocha.register("epair2a","server0","192.168.255.1","255.255.255.0","65000")
+d62 2
+a63 2
+router0.assignip("epair2b","192.168.255.2","255.255.255.0")
+tomocha.register("epair2b","router0","192.168.255.2","255.255.255.0","65000")
+d65 1
+a65 1
+server0.assigngw("192.168.255.2")
+d83 1
+a83 1
+  tomocha.assignip(rname0,epaira,"192.168.0.#{ip}",'255.255.255.0')
+d93 1
+a93 1
+  seg=gnum+2
+d98 1
+a98 1
+  ip="192.168.#{seg}.2"
+d103 1
+a103 1
+  ip="192.168.#{seg}.1"
+d109 2
+a110 1
+  #    assign /20
+d117 2
+a118 2
+  seg=gnum*16 
+  ip="172.16.#{seg}.2"
+d120 1
+a120 1
+  tomocha.assignip(rname2,epaira,ip,'255.255.255.0',as)
+d123 2
+a124 2
+  ip="172.16.#{seg}.1"
+  tomocha.assignip(rname1,epairb,ip,'255.255.255.0',as)
+d134 3
+a136 3
+  seg=gnum*16+1 
+  ip="172.16.#{seg}.254"
+  tomocha.assignip(rname2,epaira,ip,'255.255.255.0',as)
+d142 17
+a158 4
+  #
+  servername="server" + (1+gnum).to_s
+  ip="172.16.#{seg}.1"
+  gw="172.16.#{seg}.254"
+d163 1
+a163 1
+  tomocha.assignip(servername,epaira,ip,'255.255.255.0',as)
+d171 5
+a175 1
+tomocha.start("server1","unbound")
+d177 1
+a177 3
+# add adhoc option for routing to the Internet
+system("/etc/rc.d/routing restart")
+system("jexec router0 route add default 192.168.11.1")
+@
+
+
+1.37
+log
+@hoge
+@
+text
+@d5 1
+a5 1
+# 	$Id: jail.rb,v 1.36 2013/02/16 05:53:22 tss Exp tss $	
+d33 1
+a33 2
+ifconfig("epair0a inet 192.168.1.1 netmask 255.255.255.0")
+ifconfig("epair0a inet6 2001:df0:68:c300::1/64")
+d36 2
+a37 3
+router0.assignip("epair0b","192.168.1.254","255.255.255.0") 
+router0.assignip6("epair0b","2001:df0:68:c300::2","64")
+tomocha.register("router0","epair0b","192.168.1.254","255.255.255.0","","2001:df0:68:c300::2","64") # you need this if you did not use $tomocha.assignip .
+d48 1
+a48 2
+router0.assignip6("epair1a","2001:df0:68:c3ff:192:168:0:254","64")
+tomocha.register("epair1a","router0","192.168.0.254","255.255.255.0","","2001:df0:68:c3ff:192:168:0:254","64")  #2001:df0:68:c3ff/48
+d63 1
+a63 2
+router0.assignip6("epair2b","2001:df0:68:c3fe:192:168:255:2","64")
+tomocha.register("epair2b","router0","192.168.255.2","255.255.255.0","65000","2001:df0:68:c3fe:192:168:255:2","64") #2001:df0:68:c3fe/48
+a83 1
+  tomocha.assignip6(rname0,epaira,"2001:df0:68:c3ff:192:168:0:#{ip}","64")
+d159 6
+@
+
+
+1.36
+log
+@hoge
+@
+text
+@d2 1
+a2 2
+# Internet Builder (sample script using vitocha.rb)
+# 	$Id: jail.rb,v 1.35 2013/01/20 13:59:22 tss Exp tss $	
+d4 3
+a6 1
+#
+@
+
+
+1.35
+log
+@modify comment
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.34 2013/01/20 13:58:09 tss Exp tss $	
+d87 1
+@
+
+
+1.34
+log
+@rename library
+@
+text
+@d2 2
+a3 2
+# Internet Builder
+# 	$Id: jail.rb,v 1.33 2013/01/20 13:05:14 tss Exp tss $	
+@
+
+
+1.33
+log
+@hoge
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.32 2013/01/20 13:00:48 tss Exp tss $	
+d11 1
+a11 1
+require 'convivit.rb'
+@
+
+
+1.32
+log
+@hoge
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.31 2013/01/20 12:50:50 tss Exp tss $	
+d167 1
+a167 1
+system('nwdiag -o #{$jails}/data/net.png #{$jails}/data/net.diag')
+@
+
+
+1.31
+log
+@library integration into convivit.rb
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.30 2013/01/20 06:28:15 tss Exp tss $	
+d52 1
+a52 1
+tomocha.register("epair1b","bridge0","","","","","")
+d61 1
+a61 1
+tomocha.register("epair2a","server0","192.168.255.1","255.255.255.0","65000","","")
+d86 1
+a86 1
+  tomocha.assignip(rname0,epaira,"192.168.0.#{ip}",'255.255.255.0','')
+d90 1
+a90 1
+  tomocha.register(epairb,"bridge0","","","","","")
+@
+
+
+1.30
+log
+@data to /jails from /jails/bin
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.29 2013/01/20 06:11:56 tss Exp tss $	
+d7 2
+a8 2
+# make router0-9 , bridge0-3 , server1-3
+#  by using mkrouter and mkserver
+d11 1
+a11 7
+require 'shell'
+require File.expand_path(File.dirname(__FILE__) + '/shcommand')
+require File.expand_path(File.dirname(__FILE__) + '/operator')
+require File.expand_path(File.dirname(__FILE__) + '/equipment')
+require File.expand_path(File.dirname(__FILE__) + '/router')
+require File.expand_path(File.dirname(__FILE__) + '/bridge')
+require File.expand_path(File.dirname(__FILE__) + '/server')
+d164 1
+a164 1
+f=open("/jails/data/net.diag","w")
+d167 1
+a167 1
+system('nwdiag -o /jails/data/net.png /jails/data/net.diag')
+@
+
+
+1.29
+log
+@add ipv6
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.28 2013/01/13 10:12:38 root Exp root $	
+d170 1
+a170 1
+f=open("/jails/bin/data/net.diag","w")
+d173 1
+a173 1
+system('nwdiag -o /jails/bin/data/net.png /jails/bin/data/net.diag')
+@
+
+
+1.28
+log
+@change epaira,epairb,n
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.27 2013/01/13 08:49:35 root Exp root $	
+d39 1
+d43 2
+a44 1
+tomocha.register("router0","epair0b","192.168.1.254","255.255.255.0","") # you need this if you did not use $tomocha.assignip .
+d55 2
+a56 1
+tomocha.register("epair1a","router0","192.168.0.254","255.255.255.0","")
+d58 1
+a58 1
+tomocha.register("epair1b","bridge0","","","")
+d67 1
+a67 1
+tomocha.register("epair2a","server0","192.168.255.1","255.255.255.0","65000")
+d71 2
+a72 1
+tomocha.register("epair2b","router0","192.168.255.2","255.255.255.0","65000")
+d96 1
+a96 1
+  tomocha.register(epairb,"bridge0","","","")
+@
+
+
+1.27
+log
+@change n=tomocha.createpair to a,b,n=tomocha.createpair
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.26 2012/12/08 23:39:47 root Exp root $	
+d41 1
+a41 1
+router0.assignip("epair0b","192.168.1.254","255.255.255.0","") 
+d55 1
+a55 1
+tomocha.register("epair1b","bridge0","","")
+d86 7
+a92 7
+  n=tomocha.createpair
+  tomocha.connect(rname0,"epair#{n}a")
+  tomocha.assignip(rname0,"epair#{n}a","192.168.0.#{ip}",'255.255.255.0','')
+  tomocha.up(rname0,"epair#{n}a")
+  bridge0.connect("epair#{n}b") 
+  bridge0.up("epair#{n}b")
+  tomocha.register("epair#{n}b","bridge0","","")
+d101 2
+a102 2
+  n=tomocha.createpair
+  tomocha.connect(rname1,"epair#{n}a")
+d105 3
+a107 3
+  tomocha.assignip(rname1,"epair#{n}a",ip,'255.255.255.0',as)
+  tomocha.up(rname1,"epair#{n}a")
+  tomocha.connect(rname0,"epair#{n}b")
+d109 2
+a110 2
+  tomocha.assignip(rname0,"epair#{n}b",ip,'255.255.255.0',as)
+  tomocha.up(rname0,"epair#{n}b")
+d166 1
+a166 1
+f=open("./data/net.diag","w")
+d169 1
+a169 1
+system('nwdiag -o ./data/net.png ./data/net.diag')
+@
+
+
+1.26
+log
+@add message
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.25 2012/12/07 15:20:18 root Exp root $	
+d40 3
+a42 3
+router0.connect("epair0b")
+router0.assignip("epair0b","192.168.1.254","255.255.255.0")
+tomocha.register("router0","epair0b","192.168.1.254","255.255.255.0") # you need this if you did not use $tomocha.assignip .
+d53 1
+a53 1
+tomocha.register("epair1a","router0","192.168.0.254","255.255.255.0")
+d64 1
+a64 1
+tomocha.register("epair2a","server0","192.168.255.1","255.255.255.0")
+d68 1
+a68 1
+tomocha.register("epair2b","router0","192.168.255.2","255.255.255.0")
+d88 1
+a88 1
+  tomocha.assignip(rname0,"epair#{n}a","192.168.0.#{ip}",'255.255.255.0')
+d104 2
+a105 1
+  tomocha.assignip(rname1,"epair#{n}a","#{ip}",'255.255.255.0')
+d109 1
+a109 1
+  tomocha.assignip(rname0,"epair#{n}b","#{ip}",'255.255.255.0')
+d119 1
+a119 1
+  n=tomocha.createpair
+d123 4
+a126 3
+  tomocha.assignip(rname2,"epair#{n}a","#{ip}",'255.255.255.0')
+  tomocha.up(rname2,"epair#{n}a")
+  tomocha.connect(rname1,"epair#{n}b")
+d128 2
+a129 2
+  tomocha.assignip(rname1,"epair#{n}b","#{ip}",'255.255.255.0')
+  tomocha.up(rname1,"epair#{n}b")
+d136 2
+a137 2
+  n=tomocha.createpair
+  tomocha.connect(rname2,"epair#{n}a")
+d140 2
+a141 2
+  tomocha.assignip(rname2,"epair#{n}a","#{ip}",'255.255.255.0')
+  tomocha.up(rname2,"epair#{n}a")
+d152 3
+a154 3
+  n=tomocha.createpair
+  tomocha.connect(servername,"epair#{n}a")
+  tomocha.assignip(servername,"epair#{n}a","#{ip}",'255.255.255.0')
+d156 3
+a158 3
+  tomocha.up(servername,"epair#{n}a")
+  tomocha.connect(bridge,"epair#{n}b")
+  tomocha.up(bridge,"epair#{n}b")
+@
+
+
+1.25
+log
+@add nsd and unbound on server1
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.24 2012/11/14 10:40:40 root Exp root $	
+d71 1
+d158 1
+d161 1
+a161 1
+puts "Finish!"
+d163 1
+d165 1
+a165 1
+f.puts tomocha.gendiag
+d168 2
+@
+
+
+1.24
+log
+@chottodake
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.23 2012/11/10 08:42:05 root Exp root $	
+d157 2
+@
+
+
+1.23
+log
+@unglobalize tomocha
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.22 2012/11/10 07:37:10 root Exp root $	
+d81 2
+a82 3
+  rnum=1+gnum*3
+  rname0="router"+rnum.to_s
+  ip=gnum+1
+d96 1
+a96 2
+  rnum=2+gnum*3
+  rname1="router"+rnum.to_s
+d114 1
+a114 2
+  rnum=3+gnum*3
+  rname2="router"+rnum.to_s
+d131 1
+a131 2
+  bnum=gnum+1
+  bridge="bridge"+bnum.to_s
+d144 1
+a144 2
+  snum=1+gnum
+  servername="server"+snum.to_s
+@
+
+
+1.22
+log
+@gen net.png
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.21 2012/11/09 15:56:54 root Exp root $	
+d24 5
+a28 3
+#
+# Setup router0 as a gateway to realserver
+#  realsever--epair0b--(epair0a--router0--epair1a--epair1b--bridge0)
+d32 1
+a32 1
+$tomocha=Operator.new
+d37 1
+a37 1
+$tomocha.createpair
+d42 1
+a42 1
+$tomocha.register("router0","epair0b","192.168.1.254","255.255.255.0") # you need this if you did not use $tomocha.assignip .
+d50 1
+a50 1
+$tomocha.createpair
+d53 1
+a53 1
+$tomocha.register("epair1a","router0","192.168.0.254","255.255.255.0")
+d55 1
+a55 1
+$tomocha.register("epair1b","bridge0","","")
+d61 1
+a61 1
+$tomocha.createpair
+d64 1
+a64 1
+$tomocha.register("epair2a","server0","192.168.255.1","255.255.255.0")
+d68 1
+a68 1
+$tomocha.register("epair2b","router0","192.168.255.2","255.255.255.0")
+d71 5
+a75 1
+#
+d84 1
+a84 1
+  $tomocha.setuprouter(rname0)
+d86 4
+a89 4
+  n=$tomocha.createpair
+  $tomocha.connect(rname0,"epair#{n}a")
+  $tomocha.assignip(rname0,"epair#{n}a","192.168.0.#{ip}",'255.255.255.0')
+  $tomocha.up(rname0,"epair#{n}a")
+d92 2
+a93 2
+  $tomocha.register("epair#{n}b","bridge0","","")
+  $tomocha.start(rname0,"quagga")
+d100 1
+a100 1
+  $tomocha.setuprouter(rname1)
+d102 2
+a103 2
+  n=$tomocha.createpair
+  $tomocha.connect(rname1,"epair#{n}a")
+d105 3
+a107 3
+  $tomocha.assignip(rname1,"epair#{n}a","#{ip}",'255.255.255.0')
+  $tomocha.up(rname1,"epair#{n}a")
+  $tomocha.connect(rname0,"epair#{n}b")
+d109 3
+a111 3
+  $tomocha.assignip(rname0,"epair#{n}b","#{ip}",'255.255.255.0')
+  $tomocha.up(rname0,"epair#{n}b")
+  $tomocha.start(rname1,"quagga")
+d118 1
+a118 1
+  $tomocha.setuprouter(rname2)
+d120 2
+a121 2
+  n=$tomocha.createpair
+  $tomocha.connect(rname2,"epair#{n}a")
+d124 3
+a126 3
+  $tomocha.assignip(rname2,"epair#{n}a","#{ip}",'255.255.255.0')
+  $tomocha.up(rname2,"epair#{n}a")
+  $tomocha.connect(rname1,"epair#{n}b")
+d128 3
+a130 3
+  $tomocha.assignip(rname1,"epair#{n}b","#{ip}",'255.255.255.0')
+  $tomocha.up(rname1,"epair#{n}b")
+  $tomocha.start(rname2,"quagga")
+d136 3
+a138 3
+  $tomocha.setupbridge(bridge)
+  n=$tomocha.createpair
+  $tomocha.connect(rname2,"epair#{n}a")
+d141 4
+a144 4
+  $tomocha.assignip(rname2,"epair#{n}a","#{ip}",'255.255.255.0')
+  $tomocha.up(rname2,"epair#{n}a")
+  $tomocha.connect(bridge,"epair#{n}b")
+  $tomocha.up(bridge,"epair#{n}b")
+d152 1
+a152 1
+  $tomocha.setupserver(servername)
+d154 7
+a160 7
+  n=$tomocha.createpair
+  $tomocha.connect(servername,"epair#{n}a")
+  $tomocha.assignip(servername,"epair#{n}a","#{ip}",'255.255.255.0')
+  $tomocha.assigngw(servername,gw)
+  $tomocha.up(servername,"epair#{n}a")
+  $tomocha.connect(bridge,"epair#{n}b")
+  $tomocha.up(bridge,"epair#{n}b")
+d163 1
+d165 1
+a165 1
+f.puts $tomocha.gendiag
+@
+
+
+1.21
+log
+@add nwdiag
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.20 2012/11/07 14:50:41 root Exp root $	
+d157 1
+a157 1
+f=open("net.diag","w")
+d160 1
+@
+
+
+1.20
+log
+@add start quagga
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.19 2012/11/07 14:33:10 root Exp root $	
+d13 1
+a13 1
+require File.expand_path(File.dirname(__FILE__) + '/tomocha')
+d30 1
+a30 1
+$tomocha=Tomocha.new
+d34 1
+a34 1
+gateway0=Router.new("router0")
+d38 5
+a42 4
+gateway0.connect("epair0b")
+gateway0.assignip("epair0b","192.168.1.254","255.255.255.0")
+gateway0.up("epair0b")
+gateway0.start("quagga")
+d46 2
+a47 2
+ix0=Bridge.new("bridge0")
+ix0.on
+d49 6
+a54 5
+gateway0.connect("epair1a")
+gateway0.assignip("epair1a","192.168.0.254","255.255.255.0")
+gateway0.up("epair1a")
+ix0.connect("epair1b")
+ix0.up("epair1b")
+d58 1
+a58 1
+rootserver0=Server.new("server0")
+d60 9
+a68 7
+rootserver0.connect("epair2a")
+rootserver0.assignip("epair2a","192.168.255.1","255.255.255.0")
+rootserver0.up("epair2a")
+gateway0.connect("epair2b")
+gateway0.assignip("epair2b","192.168.255.2","255.255.255.0")
+gateway0.up("epair2b")
+rootserver0.assigngw("192.168.255.2")
+d77 1
+d79 1
+a79 1
+  # connect to ix0
+d82 1
+a82 1
+  $tomocha.assignip(rname0,"epair#{n}a","192.168.0.#{rnum}",'255.255.255.0')
+d84 3
+a86 2
+  ix0.connect("epair#{n}b") 
+  ix0.up("epair#{n}b")
+d93 1
+d98 1
+a98 1
+  ip="192.168.#{rnum}.2"
+d102 1
+a102 1
+  ip="192.168.#{rnum}.1"
+d104 1
+a104 1
+  $tomocha.up(rname0,"epair#{n}b"
+d157 3
+a159 3
+
+
+
+@
+
+
+1.19
+log
+@add root server
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.18 2012/11/06 13:59:42 root Exp root $	
+d41 1
+d81 1
+d97 2
+a98 1
+  $tomocha.up(rname0,"epair#{n}b")
+d117 1
+@
+
+
+1.18
+log
+@add comment
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.17 2012/11/02 13:01:50 root Exp root $	
+d41 2
+a42 2
+
+# connect to inner segment bridge (IX) 
+d53 12
+a71 1
+  puts rname0
+a143 1
+
+d145 1
+@
+
+
+1.17
+log
+@ip address bug
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.16 2012/11/02 08:21:48 root Exp root $	
+d6 5
+d60 1
+a60 1
+  p rname0
+d65 1
+a65 1
+  $tomocha.assignip(rname0,"epair#{n}a",'192.168.#{rnum}.1','255.255.255.0')
+@
+
+
+1.16
+log
+@add server
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.15 2012/11/02 07:06:36 root Exp root $	
+d12 1
+d49 1
+a49 1
+0.upto(0) do |gnum|
+d60 1
+a60 1
+  $tomocha.assignip(rname0,"epair#{n}a",'192.168.0.1','255.255.255.0')
+d117 2
+a122 2
+  seg=gnum*16+1 
+  ip="172.16.#{seg}.1"
+d124 1
+@
+
+
+1.15
+log
+@reflection into tomocha
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.14 2012/11/01 15:39:06 root Exp root $	
+d54 2
+a55 1
+  tomocha.setuprouter(rname0)
+d58 3
+a60 3
+  tomocha.connect(rname0,"epair#{n}a")
+  tomocha.assignip(rname0,"epair#{n}a",'192.168.0.1','255.255.255.0')
+  tomocha.up(rname0,"epair#{n}a")
+d68 1
+a68 1
+  tomocha.setuprouter(rname1)
+d71 1
+a71 1
+  tomocha.connect(rname1,"epair#{n}a")
+d73 3
+a75 3
+  tomocha.assignip(rname1,"epair#{n}a","#{ip}",'255.255.255.0')
+  tomocha.up(rname1,"epair#{n}a")
+  tomocha.connect(rname0,"epair#{n}b")
+d77 2
+a78 2
+  tomocha.assignip(rname0,"epair#{n}b","#{ip}",'255.255.255.0')
+  tomocha.up(rname0,"epair#{n}b")
+d85 1
+a85 1
+  tomocha.setuprouter(rname2)
+d88 1
+a88 1
+  tomocha.connect(rname2,"epair#{n}a")
+d91 3
+a93 3
+  tomocha.assignip(rname2,"epair#{n}a","#{ip}",'255.255.255.0')
+  tomocha.up(rname2,"epair#{n}a")
+  tomocha.connect(rname1,"epair#{n}b")
+d95 2
+a96 2
+  tomocha.assignip(rname1,"epair#{n}b","#{ip}",'255.255.255.0')
+  tomocha.up(rname1,"epair#{n}b")
+d102 1
+a102 1
+  tomocha.setuprouter(bridge)
+d104 1
+a104 1
+  tomocha.connect(rname2,"epair#{n}a")
+d107 19
+a125 4
+  tomocha.assignip(rname2,"epair#{n}a","#{ip}",'255.255.255.0')
+  tomocha.up(rname2,"epair#{n}a")
+  tomocha.connect(bridge,"epair#{n}b")
+  tomocha.up(bridge,"epair#{n}b")
+@
+
+
+1.14
+log
+@debug
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.13 2012/11/01 15:32:08 root Exp root $	
+d49 1
+d51 1
+d54 1
+a54 1
+  eval("#{rname0}=Router.new(rname0)")
+d57 3
+a59 3
+  eval("#{rname0}.connect('epair#{n}a')")
+  eval("#{rname0}.assignip('epair#{n}a','192.168.0.1','255.255.255.0')")
+  eval("#{rname0}.up('epair#{n}a')")
+d64 1
+d67 1
+a67 1
+  eval("#{rname1}=Router.new(rname1)")
+d70 1
+a70 1
+  eval("#{rname1}.connect('epair#{n}a')")
+d72 3
+a74 3
+  eval("#{rname1}.assignip('epair#{n}a','#{ip}','255.255.255.0')")
+  eval("#{rname1}.up('epair#{n}a')")
+  eval("#{rname0}.connect('epair#{n}b')")
+d76 3
+a78 2
+  eval("#{rname0}.assignip('epair#{n}b','#{ip}','255.255.255.0')")
+  eval("#{rname0}.up('epair#{n}b')")
+d80 2
+d84 1
+a84 1
+  eval("#{rname2}=Router.new(rname1)")
+d87 2
+a88 2
+  eval("#{rname2}.connect('epair#{n}a')")
+  seg=gnum*16 # assign /20
+d90 3
+a92 3
+  eval("#{rname2}.assignip('epair#{n}a','#{ip}','255.255.255.0')")
+  eval("#{rname2}.up('epair#{n}a')")
+  eval("#{rname1}.connect('epair#{n}b')")
+d94 4
+a97 2
+  eval("#{rname1}.assignip('epair#{n}b','#{ip}','255.255.255.0')")
+  eval("#{rname1}.up('epair#{n}b')")
+d99 12
+@
+
+
+1.13
+log
+@create isp block
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.12 2012/11/01 14:04:32 root Exp root $	
+d77 1
+a77 1
+  rname1="router"+rnum.to_s
+@
+
+
+1.12
+log
+@use reflection (eval)
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.11 2012/10/28 14:46:18 root Exp root $	
+d47 45
+a91 12
+rnum=1
+rname="router"+rnum.to_s
+eval("#{rname}=Router.new('router1')")
+n=$tomocha.createpair
+eval("#{rname}.connect('epari#{n}a')")
+eval("#{rname}.assignip('epair#{n}a','192.168.0.1','255.255.255.0')")
+eval("#{rname}.up('epari#{n}a')")
+ifconfig("epair#{n}a up")
+ix0.connect("epair#{n}b")
+ix0.up("epair#{n}b")
+
+
+@
+
+
+1.11
+log
+@shcommand to external
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.10 2012/10/28 08:59:11 root Exp root $	
+d42 1
+a42 1
+gateway0.assignip("epair1a","192.168.0.1","255.255.255.0")
+d47 15
+@
+
+
+1.10
+log
+@show epairs
+@
+text
+@d3 1
+a3 11
+# 	$Id: jail.rb,v 1.9 2012/10/28 03:02:21 root Exp root $	
+# $Log: jail.rb,v $
+# Revision 1.9  2012/10/28 03:02:21  root
+# .
+#
+# Revision 1.8  2012/10/13 07:42:48  root
+# Router Class to external
+#
+# Revision 1.7  2012/10/13 05:58:36  root
+# renew
+#
+d7 1
+d9 1
+a15 50
+#
+# define command
+#
+Shell.def_system_command("ifconfig_org", path = "/sbin/ifconfig")
+Shell.def_system_command("mount", path = "/sbin/mount")
+Shell.def_system_command("umount", path = "/sbin/umount")
+Shell.def_system_command("mount_nullfs", path = "/sbin/mount_nullfs")
+Shell.def_system_command("sysctl", path = "/sbin/sysctl")
+Shell.def_system_command("jail", path = "/usr/sbin/jail")
+Shell.def_system_command("jls", path = "/usr/sbin/jls")
+Shell.def_system_command("jexec_org", path = "/usr/sbin/jexec")
+
+#
+# primitive commands
+#
+def ifconfig(param)
+  sh=Shell.new
+  sh.transact{
+    ifconfig_org(*param.split)
+  }
+end
+
+def jexec(name,param)
+  jexec_org(name,*param.split)
+end
+
+def ifalias(interface,ip)
+    ifconfig_org("#{interface}","alias","#{ip}")
+end
+
+def jailc(name)
+  jail("-c","vnet","host.hostname=#{name}","name=#{name}","path=#{$jails}/#{name}","persist")
+end
+
+def mt_devfs(path)
+  mount("-t","devfs","devfs","#{$jails}/#{path}/dev")
+end
+
+def umt_devfs(path)
+  umount("#{$jails}/#{path}/dev")
+end
+
+def mt_nullfs(path)
+  mount_nullfs("#{$jails}/basejail","#{$jails}/#{path}/basejail")
+end
+
+def umt_nullfs(path)
+  umount("#{$jails}/#{path}/basejail")
+end
+
+d23 2
+a24 1
+tomocha=Tomocha.new
+d28 2
+a29 2
+router0=Router.new("router0")
+tomocha.createpair
+d32 3
+a34 3
+router0.connect("epair0b")
+router0.assignip("epair0b","192.168.1.254","255.255.255.0")
+router0.up("epair0b")
+d40 4
+a43 4
+tomocha.createpair
+router0.connect("epair1a")
+router0.assignip("epair1a","192.168.0.1","255.255.255.0")
+router0.up("epair1a")
+d46 1
+a46 2
+router0.epairs
+bridge0.epairs
+@
+
+
+1.9
+log
+@.
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.8 2012/10/13 07:42:48 root Exp root $	
+d5 3
+d17 3
+a19 2
+require '/jail/bin/router'
+require '/jail/bin/bridge'
+a73 16
+#
+# macro commands
+#
+def createpair
+  sh=Shell.new
+  sh.transact{
+    ifconfig("epair create")
+    epairnum
+  }
+end
+
+def epairnum
+  ifconfig_org.grep(/epair.a/).size-1
+end
+
+
+d81 2
+d86 1
+a86 1
+createpair
+d92 1
+d97 1
+a97 1
+createpair
+d103 2
+@
+
+
+1.8
+log
+@Router Class to external
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.7 2012/10/13 05:58:36 root Exp root $	
+d5 3
+d14 2
+a15 1
+require 'router'
+d94 1
+d103 9
+a111 15
+sh=Shell.new
+sh.transact{
+  ifconfig("bridge create") 
+  ifconfig("bridge0 vnet router0")
+  createpair
+  ifconfig("epair1a vnet router0")
+  ifconfig("epair1b vnet router0")
+  jexec("router0","ifconfig epair1a inet 192.168.0.254 netmask 255.255.255.0")
+  jexec("router0","ifconfig epair1a up")
+  jexec("router0","ifconfig epair1b up")
+  jexec("router0","ifconfig bridge0 addm epair1b")
+  jexec("router0","ifconfig bridge0 up")
+  jexec("router0","route add default 192.168.1.1")
+  jexec("router0","/usr/local/etc/rc.d/quagga start")
+}
+@
+
+
+1.7
+log
+@renew
+@
+text
+@d3 5
+a7 2
+# 	$Id: jail.rb,v 1.6 2012/10/13 05:46:33 root Exp root $	
+# $Log$
+d11 1
+a80 55
+# Parts Classes
+class Router
+
+  def initialize(name)
+    @@name=name
+    sh=Shell.new
+    sh.transact{
+      if jls("-j",name).to_a.size == 1
+        jailc(name)
+        mt_devfs(name)
+        mt_nullfs(name)
+        jexec(name,"sysctl -w net.inet.ip.forwarding=1")
+        jexec(name,"ifconfig lo0 127.0.0.1/24 up")
+        jexec(name,"ipfw add allow ip from any to any")
+      end
+    }
+  end
+
+  def destroy
+     puts "destroy #{@@name}"
+     name=@@name 
+     sh=Shell.new
+     sh.transact{
+       ifnames=jexec(name,"ifconfig -l").to_s.split(" ").select{|item| item =~ /epair.*/}
+       ifnames.each{|epair| ifconfig("#{epair} -vnet #{name}")}
+       umt_nullfs(name)
+       jail("-r",name)
+       umt_devfs(name)
+     }
+  end
+
+  def connect(interface)
+     name=@@name 
+     sh=Shell.new
+     sh.transact{
+      ifconfig("#{interface} vnet #{name}")
+    }
+  end
+
+  def assignip(interface,ip,mask)
+     name=@@name 
+     sh=Shell.new
+     sh.transact{
+      jexec(name,"ifconfig #{interface} inet #{ip} netmask #{mask}")
+    }
+  end
+
+  def up(interface)
+     name=@@name 
+     sh=Shell.new
+     sh.transact{
+      jexec(name,"ifconfig #{interface} up")
+    }
+  end
+end
+@
+
+
+1.6
+log
+@router0 to object
+@
+text
+@d3 2
+a4 2
+# 	$Id: jail.rb,v 1.5 2012/10/13 05:25:21 root Exp root $	
+# $log$
+@
+
+
+1.5
+log
+@renew
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.3 2012/10/13 04:49:29 root Exp root $	
+d28 4
+a31 1
+  ifconfig_org(*param.split)
+d66 5
+a70 2
+  ifconfig("epair create")
+  epairnum
+d108 23
+d139 2
+d142 7
+a150 8
+  # create router and connect to realserver
+  createpair
+  ifconfig("epair0a inet 192.168.1.1 netmask 255.255.255.0")
+  ifconfig("epair0a up")
+  ifconfig("epair0b vnet router0")
+  jexec("router0","ifconfig epair0b inet 192.168.1.254 netmask 255.255.255.0")
+  jexec("router0","ifconfig epair0b up")
+  # connect to inner segment bridge (IX)
+@
+
+
+1.4
+log
+@hoge
+@
+text
+@d4 1
+a4 1
+# $Log$
+@
+
+
+1.3
+log
+@hoge
+@
+text
+@d3 2
+a4 2
+# 	$Id: jail.rb,v 1.2 2012/10/13 02:38:40 root Exp root $	
+# $log$
+@
+
+
+1.2
+log
+@Router Class
+@
+text
+@d3 2
+a4 1
+# 	$Id: jail.rb,v 1.1 2012/10/13 02:29:52 root Exp root $	
+d21 1
+d48 1
+a48 1
+  unmount("#{$jails}/#{path}/dev")
+d78 8
+a85 6
+      jailc(name)
+      mt_devfs(name)
+      mt_nullfs(name)
+      jexec(name,"sysctl -w net.inet.ip.forwarding=1")
+      jexec(name,"ifconfig lo0 127.0.0.1/24 up")
+      jexec(name,"ipfw add allow ip from any to any")
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 1
+a3 1
+# 	$Id: jail.rb,v 1.8 2012/09/13 13:56:05 tss Exp tss $	
+d73 1
+@

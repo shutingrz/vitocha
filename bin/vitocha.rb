@@ -26,7 +26,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF       
 # SUCH DAMAGE.                                                                 
 
-# 	$Id: vitocha.rb 1.26 2013/02/16 06:21:42 tss Exp $
+# 	$Id: vitocha.rb 1.29 2013/11/23 17:29:36 guest Exp guest $
 
 # Usage
 # operator=Operator.new
@@ -66,7 +66,7 @@ class Operator
     sh=Shell.new
     num=nil
     sh.transact{
-      num=ifconfig("epair create").to_s.scan(/epair([\d]+)a/).to_s.to_i
+      num=ifconfig("epair create").to_s.scan(/epair([\d]+)a/)[0][0].to_i
     }
     ifconfig("epair#{num}a link 02:c0:e4:00:#{num}:0a")
     ifconfig("epair#{num}b link 02:c0:e4:00:#{num}:0b")
@@ -188,14 +188,9 @@ class Operator
     }
     bridge.each_pair{|b,pairs|
       @topology=@topology+"network #{b} {"
-      pairs.each{|p| 
-        if p =~ /epair.*a/
-          equipment=self.find(p.to_s.chop+'b')[0]
-          address=self.find(p.to_s.chop+'b')[1]
-        else
-          equipment=self.find(p)[0]
-          address=self.find(p)[1]
-        end
+      pairs.each{|p|
+        equipment=@daicho[p][0]
+        address=@daicho[p][1]
         fig=""
         fig=',shape="cisco.router"' if equipment =~ /router/
         fig=',shape="cisco.standard_host"' if equipment =~ /server/
@@ -204,16 +199,32 @@ class Operator
     @topology=@topology+"}\n"
     }
     line=[]
-    @topology.each{|m| 
-      i=m.scan(/(router[0-9]+) /).sort.shift.to_s.scan(/([0-9]+)/).to_s.to_i
-      if line[i] != nil then
-        line[i]=line[i].to_s+"\n"+m
-      else
-      line[i]=m
-      end
+    @topology.each_line{|m| 
+	i=m.scan(/(router[0-9]+) /).sort.shift[0].scan(/([0-9]+)/)[0][0].to_i
+        if line[i] != nil then
+          line[i]=line[i].to_s+"\n"+m
+        else
+          line[i]=m
+        end
     }
-    @diag=@diag+line.to_s+"\n}"
+    @diag=@diag+line.join($,)+"\n}"
     return @diag
+  end
+
+  def genhtml
+    equipments=Hash.new
+    list=Array.new
+    @daicho.each{|p,data| equipments[data[0]]=data}
+    equipments.each{|key,value| list<<"<li>#{key} (#{value[1]}/#{value[2]})"}
+    html="<head><title>Inernet Simulator</title></head>\n"
+    html=html+"<body>\n"
+    html=html+"<table><tr><td><img src=\"net.png\"></td><td valign=\"top\">\n"
+    html=html+"<ul>\n"
+    html=html+list.sort.join
+    html=html+"</ul>\n"
+    html=html+"</td></table>\n"
+    html=html+"</body>\n"
+    return html
   end
 
   attr_accessor :epairnum

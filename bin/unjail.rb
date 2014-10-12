@@ -1,4 +1,4 @@
-#!/usr/local/bin/ruby
+#!/usr/local/bin/ruby20
 # VITOCHA unjail
 
 #Copyright (c) 2012-2013, Tsunehiko Suzuki
@@ -28,8 +28,8 @@
 # 	$Id: unjail.rb,v 1.5 2013/02/16 06:37:10 tss Exp $	
 
 require 'shell'
-require 'shcommand'
-require 'equipment'
+require File.expand_path(File.dirname(__FILE__) + '/shcommand')
+require File.expand_path(File.dirname(__FILE__) + '/equipment')
 
 # jails path
 $jails="/jails"
